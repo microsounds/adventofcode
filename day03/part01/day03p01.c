@@ -21,7 +21,7 @@ unsigned visited_houses(FILE *fp)
 			case '<': x--; break; /*       ^       */
 			case '>': x++; break; /* x-- < O > x++ */
 			case 'v': y++; break; /*       v       */
-			default: break;		  /*      y++      */
+			default: break;       /*      y++      */
 		}
 	}
 	unsigned i, j;

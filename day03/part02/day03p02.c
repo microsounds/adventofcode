@@ -29,7 +29,7 @@ unsigned visited_houses(FILE *fp)
 			case '<': (turn) ? x-- : a--; break; /*       ^       */
 			case '>': (turn) ? x++ : a++; break; /* x-- < O > x++ */
 			case 'v': (turn) ? y++ : b++; break; /*       v       */
-			default: break;		  				 /*      y++      */
+			default: break;                      /*      y++      */
 		}
 		turn = !turn; /* switch turns */
 	}
