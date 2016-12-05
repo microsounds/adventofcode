@@ -1,13 +1,18 @@
 ## Solutions to Advent of Code puzzles on adventofcode.com
 
-#### Building
+# 2016
+### Building
+Run `make` to build all solutions at once.
+
+# 2015
+### Building
 ```
 $ make && ./day01p01 input.txt
 ```
 
-#### Environment
+### Environment
 * C89 (gcc 4.9.2)
 
-#### Copyright
+### Copyright
 © microsounds - All Rights Reserved.
 
