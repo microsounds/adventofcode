@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <limits.h>
 #include <openssl/md5.h>
 
 /* Advent of Code 2016

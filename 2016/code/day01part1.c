@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #define DAY(n) "input/day" #n ".txt"
 
 /* Advent of Code 2016
