@@ -35,7 +35,7 @@ int tls_support(char *str)
 		bracket = !bracket; /* flip */
 		tok = strtok(NULL, "[]");
 	}
-	return (tally[0] && !tally[1]); 
+	return (tally[0] && !tally[1]);
 }
 
 int ssl_support(char *str)
@@ -79,13 +79,8 @@ int main(void)
 		if (ins[i] == '\n') lines++;
 	char **arr = (char **) malloc(sizeof(char *) * lines);
 	char *tok = strtok(ins, "\n");
-	for (i = 0; tok != NULL; i++)
-	{
-		unsigned len = strlen(tok);
-		arr[i] = (char *) malloc(len + 1);
-		strcpy(arr[i], tok);
-		tok = strtok(NULL, "\n");
-	}
+	for (i = 0; tok != NULL; tok = strtok(NULL, "\n"))
+		arr[i++] = tok;
 	for (i = 0; i < lines; i++)
 	{
 		for (j = 0; j < 2; j++)
@@ -98,8 +93,6 @@ int main(void)
 	}
 	for (i = 0; i < 2; i++)
 		printf("%d out of %d support %s\n", tally[i], lines, mode[i]);
-	for (i = 0; i < lines; i++)
-		free(arr[i]);
 	free(arr);
 	free(ins);
 	return 0;
