@@ -27,9 +27,7 @@ struct freq {
 
 int sort_freq(const void *a, const void *b)
 {
-	struct freq *x = (struct freq *)a;
-	struct freq *y = (struct freq *)b;
-	return x->count - y->count;
+	return (*(struct freq *)a).count - (*(struct freq *)b).count;
 }
 
 int main(void)
