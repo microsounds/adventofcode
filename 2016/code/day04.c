@@ -65,17 +65,13 @@ int main(void)
 			sum += sector_id;
 			for (j = 0; enc[j]; j++)
 			{
-				if (enc[j] == '-')
+				if (enc[j] == '-') /* cipher shift */
 					enc[j] = ' ';
 				else if (enc[j] >= 'a' && enc[j] <= 'z')
-				{
-					int c = enc[j] - 'a';
-					c = (c + sector_id) % 26; /* cipher shift */
-					enc[j] = c + 'a';
-				}
+					enc[j] = (((enc[j] - 'a') + sector_id) % 26) + 'a';
 			}
 			if (strstr(enc, "northpole"))
-				printf("#%d: Sector ID: %d '%s'\n", i, sector_id, enc);
+				printf("#%d: Sector ID: %d '%s'\n", i + 1, sector_id, enc);
 		}
 	}
 	printf("Sum of Sector IDs: %d\n", sum);
