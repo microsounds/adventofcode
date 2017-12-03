@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "advent.h"
 
-struct membuf {
-	unsigned char *mem;
-	size_t len, size;
-};
+/* misc */
 
 void *memdup(const void *src, size_t n)
 {
@@ -13,6 +11,8 @@ void *memdup(const void *src, size_t n)
 	memcpy(dest, src, n);
 	return ((unsigned char *)dest)[n] = '\0', dest;
 }
+
+/* membuf */
 
 struct membuf *membuf_init(void)
 {
@@ -40,6 +40,8 @@ size_t membuf_fread(struct membuf *buf, size_t size, size_t nmemb, FILE *stream)
 	return buf->mem[buf->len] = '\0', items_written;
 }
 
+/* file input */
+
 char *get_filebuffer(const char *path)
 {
 	FILE *fp;
@@ -55,20 +57,26 @@ char *get_filebuffer(const char *path)
 	return out;
 }
 
-int main(int argc, char **argv)
+/* token split */
+
+struct split *tokenize(char *str, const char *delims)
 {
-	char *in;
-	if (!argv[1] || !(in = get_filebuffer(argv[1])))
-		return 1;
-	unsigned i, sum = 0, len = strlen(in);
-	char *ltok = strtok(in, "\n"), **lines = NULL;
-	unsigned n = 0;
-	while (ltok && ++n)
+	struct split *tk = calloc(1, sizeof(struct split));
+	char *tok = strtok(str, delims);
+	while (tok && ++tk->num)
 	{
-		lines = realloc(lines, sizeof(char *) * n);
-		lines[n - 1] = memdup(ltok, strlen(ltok));
-		printf("%s\n", lines[n - 1]);
-		ltok = strtok(NULL, "\n");
+		tk->token = realloc(tk->token, sizeof(char *) * tk->num);
+		tk->token[tk->num - 1] = memdup(tok, strlen(tok));
+		tok = strtok(NULL, delims);
 	}
-	free(in);
+	return tk;
+}
+
+void token_free(struct split *self)
+{
+	unsigned i;
+	for (i = 0; i < self->num; i++)
+		free((!self->token[i]) ? NULL : self->token[i]);
+	free((!self->token) ? NULL : self->token);
+	free((!self) ? NULL : self);
 }
