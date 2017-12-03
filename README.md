@@ -1,18 +1,11 @@
-## Solutions to Advent of Code puzzles on adventofcode.com
+# Advent of Code puzzle solutions
+This repo isn't that interesting unless you refer to http://adventofcode.com/ for the the challenge text.
 
-# 2016
-### Building
-Run `make` to build all solutions at once.
+## 2017
+just build it yourself, C solutions accept `stdin` or a filename
 
-# 2015
-### Building
-```
-$ make && ./day01p01 input.txt
-```
-
-### Environment
-* C89 (gcc 4.9.2)
-
-### Copyright
-© microsounds - All Rights Reserved.
-
+`$ cat 'input.txt' | ./day01 -`
+## 2016
+invoke `make` to build all solutions at once
+## 2015
+`$ make && ./day01p1 input`
