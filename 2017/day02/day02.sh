@@ -1,6 +1,14 @@
 #!/usr/bin/env sh
 
-input="$(cat input.txt)"
+input=
+if [ -z "$1" ] || [ ! -f "$1" ]; then
+	echo "Input?" && exit 1
+elif [ "$1" = "-" ]; then
+	input="$(cat /dev/stdin)"
+else
+	input="$(cat "$1")"
+fi
+
 p1sum=
 p2sum=
 IFS='

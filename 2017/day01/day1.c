@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 {
 	char *in;
 	if (!argv[1] || !(in = get_filebuffer(argv[1])))
-		return 1;
+		return puts("Input?"), 1;
 
 	/* part 1 */
 	unsigned i, p1sum = 0, len = strlen(in);
