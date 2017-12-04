@@ -59,16 +59,25 @@ char *get_filebuffer(const char *path)
 
 /* token split */
 
+static unsigned strtok_dry(const char *str, const char *d)
+{
+	/* count tokens statically */
+	unsigned count = 0;
+	unsigned char lut[0xFF] = { 0 };
+	while ((lut[*d & 0xFF] = *d) && *d++);
+	while (*++str)
+		if (lut[*str & 0xFF] && !lut[*(str - 1) & 0xFF])
+			count++;
+	return count + !lut[*(str - 1) & 0xFF]; /* trailing token? */
+}
+
 struct split *tokenize(char *str, const char *delims)
 {
+	char *tok;
 	struct split *tk = calloc(1, sizeof(struct split));
-	char *tok = strtok(str, delims);
-	while (tok && ++tk->num)
-	{
-		tk->token = realloc(tk->token, sizeof(char *) * tk->num);
-		tk->token[tk->num - 1] = memdup(tok, strlen(tok));
-		tok = strtok(NULL, delims);
-	}
+	tk->token = malloc(sizeof(char *) * strtok_dry(str, delims));
+	while ((tok = strtok((!tk->num) ? str : NULL, delims)))
+		tk->token[tk->num++] = memdup(tok, strlen(tok));
 	return tk;
 }
 
