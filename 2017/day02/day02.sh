@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
 input=
-if [ -z "$1" ] || [ ! -f "$1" ]; then
-	echo "Input?" && exit 1
-elif [ "$1" = "-" ]; then
+if [ "$1" = "-" ]; then
 	input="$(cat /dev/stdin)"
+elif [ -z "$1" ] || [ ! -f "$1" ]; then
+	echo "Input?" && exit 1
 else
 	input="$(cat "$1")"
 fi
@@ -35,5 +35,5 @@ for line in $input; do
 	done
 done
 
-echo "part 1: $p1sum"
-echo "part 2: $p2sum"
+echo "Part 1: $p1sum"
+echo "Part 2: $p2sum"
