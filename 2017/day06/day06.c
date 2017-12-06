@@ -3,6 +3,8 @@
 #include <string.h>
 #include "advent.h"
 
+vector_generic(state, int *);
+
 int main(int argc, char **argv)
 {
 	char *in;
@@ -15,8 +17,8 @@ int main(int argc, char **argv)
 	for (i = 0; i < bank->num; i++)
 		arr[i] = atoi(bank->token[i]);
 	int size = bank->num;
-	int **state = NULL;
-	int iters = 0, inf_at = 0, done = 0;
+	struct state *st = state_init();
+	int inf_at = 0, done = 0;
 	while (!done)
 	{
 		int lg = 0;
@@ -29,21 +31,19 @@ int main(int argc, char **argv)
 			arr[++lg % size]++;
 
 		/* save previous iterations */
-		state = realloc(state, sizeof(int *) * ++iters);
-		state[iters - 1] = malloc(sizeof(int) * size);
-		memcpy(state[iters - 1], arr, sizeof(int) * size);
-		for (i = 0; i < iters - 1 && !inf_at; i++) /* detect infinite loop in state */
-			if (!memcmp(state[i], arr, sizeof(int) * size))
-				printf("Part 1: %d cycles\n", (inf_at = iters));
-		if (inf_at && iters != inf_at) /* wait 1 cycle before measuring infinite loop */
-			if (!memcmp(state[inf_at - 1], arr, sizeof(int) * size))
-					printf("Part 2: %d more cycles\n", iters - inf_at), done = !done;
+		state_insert(st, memdup(arr, sizeof(int) * size));
+		for (i = 0; i < st->len - 1 && !inf_at; i++) /* detect infinite loop in state */
+			if (!memcmp(st->arr[i], arr, sizeof(int) * size))
+				printf("Part 1: %d cycles\n", (inf_at = st->len));
+		if (inf_at && st->len != inf_at) /* wait 1 cycle before measuring infinite loop */
+			if (!memcmp(st->arr[inf_at - 1], arr, sizeof(int) * size))
+					printf("Part 2: %d more cycles\n", st->len - inf_at), done = !done;
 	}
 	free(arr);
+	for (i = 0; i < st->len; i++)
+		free((!st->arr[i]) ? NULL : st->arr[i]);
+	state_free(st);
 	token_free(bank);
-	for (i = 0; i < iters; i++)
-		free((!state[i]) ? NULL : state[i]);
-	free(state);
 	free(in);
 	return 0;
 }
