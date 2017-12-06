@@ -15,6 +15,7 @@ struct split {
 
 /* misc */
 void *memdup(const void *, size_t);
+unsigned long memsum(const void *src, size_t n);
 /* membuf */
 struct membuf *membuf_init(void);
 void membuf_free(struct membuf *);

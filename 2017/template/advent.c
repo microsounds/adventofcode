@@ -12,6 +12,19 @@ void *memdup(const void *src, size_t n)
 	return ((unsigned char *)dest)[n] = '\0', dest;
 }
 
+unsigned long memsum(const void *src, size_t n)
+{
+	/* returns checksum of memory area */
+	size_t i;
+	unsigned long s1 = 1, s2 = 0;
+	for (i = 0; i < n; i++)
+	{
+		s1 = (s1 + ((unsigned char *)src)[i]) & 0xFFFF;
+		s2 = (s1 + s2) & 0xFFFF;
+	}
+	return (s2 << 16) | s1;
+}
+
 /* membuf */
 
 struct membuf *membuf_init(void)
