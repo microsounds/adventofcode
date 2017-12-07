@@ -16,13 +16,14 @@ unsigned long memsum(const void *src, size_t n)
 {
 	/* returns checksum of memory area */
 	size_t i;
-	unsigned long s1 = 1, s2 = 0;
+	unsigned long s1, s2, sum = 4294967291L;
 	for (i = 0; i < n; i++)
 	{
-		s1 = (s1 + ((unsigned char *)src)[i]) & 0xFFFF;
-		s2 = (s1 + s2) & 0xFFFF;
+		s1 = ((unsigned char *)src)[i];
+		s2 = (sum << (s1 & 0x1F)) + (sum >> 2);
+		sum = sum ^ ((s1 << (32 - (s1 & 0x1F))) + s2);
 	}
-	return (s2 << 16) | s1;
+	return sum;
 }
 
 /* membuf */
