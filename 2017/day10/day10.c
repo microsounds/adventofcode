@@ -48,10 +48,7 @@ unsigned knothash_simple(char *in)
 
 const char *knothash(char *in)
 {
-	const char hex[] = {
-		'0', '1', '2', '3', '4', '5', '6', '7',
-		'8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
-	};
+	const char *hex = "0123456789abcdef";
 	static char out[33] = { 0 };
 	struct split *input = tokenize(in, "\n");
 	char *msg = memdup(input->token[0], strlen(input->token[0]));
